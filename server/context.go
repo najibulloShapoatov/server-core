@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"mime/multipart"
+	"net/http"
+	"reflect"
+
 	"github.com/najibulloShapoatov/server-core/monitoring/log"
 	"github.com/najibulloShapoatov/server-core/platform"
 	"github.com/najibulloShapoatov/server-core/server/session"
 	"github.com/najibulloShapoatov/server-core/utils/net"
-	"mime/multipart"
-	"net/http"
-	"reflect"
 )
 
 // Context provided by the server to handle a request
@@ -120,11 +121,11 @@ func (c *Context) Authenticated() bool {
 }
 
 // AccountID returns the current logged in user id, 0 otherwise
-func (c *Context) AccountID() db.ID {
+func (c *Context) AccountID() *string {
 	if !c.Authenticated() {
-		return db.ID("")
+		return new(string)
 	}
-	return *c.Session.AccountID
+	return c.Session.AccountID
 }
 
 // Can verifies if the user can perform the given operations
