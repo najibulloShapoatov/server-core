@@ -4,6 +4,8 @@ requires minimum to no configuration, being able to run securely with its defaul
 
 ### see example [server-core-example](https://github.com/najibulloShapoatov/server-core-example) repository
 
+https://pkg.go.dev/github.com/najibulloShapoatov/server-core
+
 #### Features
 - Automatic routing
 - Auto acquire HTTPS certificates through Let's Encrypt
