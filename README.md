@@ -2,7 +2,7 @@
 Server library provides a complete HTTP/HTTPS server that can be easily embedded in your application and
 requires minimum to no configuration, being able to run securely with its default settings.
 
-### see example [server-core-examle](https://github.com/najibulloShapoatov/server-core-example) repository
+### see example [server-core-example](https://github.com/najibulloShapoatov/server-core-example) repository
 
 #### Features
 - Automatic routing
