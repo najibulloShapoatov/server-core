@@ -4,13 +4,14 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/najibulloShapoatov/server-core/platform"
-	"github.com/najibulloShapoatov/server-core/utils"
-	"github.com/najibulloShapoatov/server-core/utils/reflection"
 	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/najibulloShapoatov/server-core/platform"
+	"github.com/najibulloShapoatov/server-core/utils"
+	"github.com/najibulloShapoatov/server-core/utils/reflection"
 )
 
 var routes = map[string]map[string]handler{}
@@ -263,10 +264,15 @@ func (h *handler) Handler(ctx *Context) (err error) {
 	// Handler returned an error
 	if err, ok := outParams[len(outParams)-1].(error); ok && err != nil {
 		data, _ := outEncoder(ctx, struct {
-			XMLName xml.Name `xml:"error" json:"-" struct:"-"`
-			Error   string   `json:"error" xml:"message,attr" struct:"[64]byte"`
-		}{Error: err.Error()},
+			XMLName   xml.Name `xml:"error" json:"-" struct:"-"`
+			Error     string   `json:"error" xml:"message,attr" struct:"[64]byte"`
+			RequestID string   `json:"requestId" xml:"request-id,attr" struct:"[128]byte"`
+		}{
+			Error:     err.Error(),
+			RequestID: ctx.Request.Header.Get(ctx.Server.Config.TraceHeader),
+		},
 		)
+
 		_, err = ctx.Response.Write(data)
 		return err
 	}
